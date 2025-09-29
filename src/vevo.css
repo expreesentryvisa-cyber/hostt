@@ -1,0 +1,298 @@
+
+/* Outer wrapper */
+.vevo-wrapper {
+  font-family: Arial, sans-serif;
+  background: #bebfc7;
+  padding: 20px;
+  min-height: 100vh; 
+}
+
+/* Main box (card) */
+.vevo-box {
+  border: 1px solid #999;
+  margin: 0 auto;
+  max-width: 100%;   /* Wider, matches original */
+  background: #fff;
+}
+
+/* Header bar */
+.vevo-header {
+  background: #072243;
+  color: white;
+  padding: 10px 15px;
+  font-weight: bold;
+}
+
+/* Instructions section */
+.vevo-instructions {
+  padding: 15px;
+  font-size: 1rem;
+  color: #000;
+}
+
+/* Form */
+.vevo-form {
+  padding: 15px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+/* Labels fixed width on the left */
+.form-group label {
+  width: 250px;       /* adjust as needed */
+  font-size: 1rem;
+  font-weight: normal;
+  text-align: left;   /* keep left aligned */
+  margin-right: 300px; /* spacing between label and input */
+  color: #000;
+}
+
+
+/* Inputs & selects */
+.form-group select,
+.form-group input[type="text"],
+.form-group input[type="date"] {
+box-sizing: border-box;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #bebfc7;
+  font-family: inherit;
+  font-size: inherit;
+  margin: 0;
+  max-width: 100%;
+  padding: 1px;
+  color: #000;
+}
+
+/* Required asterisk */
+.required {
+  color: red;
+  margin-right: 3px;
+}
+
+/* Terms section */
+.terms {
+  color: #000;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  margin-left: 560px;
+}
+
+.terms a {
+  text-decoration: underline;
+  color: #072243;
+}
+
+/* Buttons row */
+.form-actions {
+  border-top: 1px solid #ccc;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between; /* push children apart */
+  align-items: center;
+  background-color: #f2f2f2;
+}
+.form-actions {
+  border-top: 1px solid #ccc;
+  padding: 10px 15px;
+  display: flex;
+}
+
+.form-actions .btn:first-child {
+  margin-right: auto; /* pushes next button(s) away */
+}
+
+.form-actions .btn:last-child {
+  margin-left: auto;  /* ensures last button on right */
+}
+
+.btn {
+  padding: 4px 16px;
+  border: 1px solid #999;
+  background: #f5f5f5;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #474747;
+}
+
+/* Footer */
+.vevo-footer {
+  max-width: 100%;
+  margin: 15px auto;
+  padding: 20px 20px;
+  background: #f1f1f1;
+  font-size: 0.85rem;
+  border-top: 1px solid #ccc;
+}
+
+.vevo-footer a {
+  text-decoration: underline;
+  color: #072243;
+  margin: 0 5px;
+  font-size: 16px;
+}
+
+/* Simple VEVO Results Styling - Minimal approach */
+.vevo-results {
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+}
+
+.vevo-results h3 {
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.vevo-search-summary {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.vevo-search-summary strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.vevo-visa-details h4 {
+  margin: 20px 5px 15px 5px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.vevo-detail-row {
+  display: table;
+  width: 100%;
+  margin-bottom: 8px;
+  margin: 5px;
+}
+
+.vevo-detail-label {
+  display: table-cell;
+  width: 500px;
+  vertical-align: top;
+  padding-right: 20px;
+  font-weight: normal;
+  font-size: 16px;
+
+}
+
+.vevo-detail-value {
+  display: table-cell;
+  vertical-align: top;
+  word-wrap: break-word;
+  font-size: 16px;
+}
+
+.vevo-condition-item {
+  margin-bottom: 5px;
+}
+
+.vevo-workplace-rights {
+  line-height: 1.4;
+}
+
+.vevo-workplace-link {
+  color: blue;
+  text-decoration: underline;
+}
+
+/* Results action buttons */
+.vevo-results .form-actions {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.vevo-results .form-actions .btn {
+  margin: 0 10px;
+  padding: 8px 16px;
+}
+
+/* Error message */
+.vevo-error-message {
+  background-color: #ffe6e6;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+/* Loading indicator */
+.vevo-loading-indicator {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .vevo-detail-row {
+    display: block;
+  }
+  
+  .vevo-detail-label {
+    display: block;
+    width: auto;
+    padding-right: 0;
+    font-weight: bold;
+    margin-bottom: 3px;
+  }
+  
+  .vevo-detail-value {
+    display: block;
+    margin-bottom: 10px;
+  }
+}
+.vevo-info-banner {
+  margin-bottom: 20px;
+  padding: 10px
+}
+.vevo-info-header {
+  background-color: #2e5c99;
+  color: white;
+  padding: 8px 12px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.vevo-info-icon {
+  margin-right: 5px;
+}
+
+.vevo-info-text {
+  background-color: #f8f9fa;
+  padding: 15px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #666;
+}
+.vevo-action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  margin: 5px;
+  padding: 10px ;
+   border: 1px solid #ccc;
+}
+
+.vevo-action-btn {
+
+  font-size: 13px;
+}
+
+.vevo-export-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.vevo-export-btn {
+  cursor: pointer;
+  margin-right: 5px;
+  font-size: 13px;
+}
+
