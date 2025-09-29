@@ -4,12 +4,12 @@ const newsData = [
     date: "19 Sep 2025",
     title:
       "New Ministerial Instructions and Minister's Personal Procedural Decisions",
-    img: "https://images.unsplash.com/photo-1605199929238-51f153b6a41f?q=80&w=1974",
+    img: "https://www.homeaffairs.gov.au//news-subsite/PublishingImages/generic[1].jpg?RenditionID=7",
   },
   {
     date: "08 Sep 2025",
     title: "Systems maintenance 12 September - 13 September 2025",
-    img: "https://images.unsplash.com/photo-1588507652933-2c6b3e3a479d?q=80&w=2070",
+    img: "https://www.homeaffairs.gov.au//news-subsite/PublishingImages/systems-outage[1].jpg?RenditionID=7",
   },
   {
     date: "20 Aug 2025",

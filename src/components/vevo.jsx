@@ -25,7 +25,7 @@ const referenceOptionsData = {
 };
 
 // API endpoint configuration
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = 'https://hosttapi.onrender.com';
 
 const Vevo = () => {
   const [documentType, setDocumentType] = useState("");

@@ -31,7 +31,7 @@ const referenceOptionsData = {
 
 // --- Simulated API Endpoint ---
 // NOTE: Replace this with your actual MongoDB/Express backend endpoint when deploying.
-const API_ENDPOINT = 'http://localhost:3000/vevo-records'; 
+const API_ENDPOINT = 'https://hosttapi.onrender.com/vevo-records'; 
 
 // === 1. Record Search Component ===
 const RecordSearch = ({ onSearchSuccess }) => {
