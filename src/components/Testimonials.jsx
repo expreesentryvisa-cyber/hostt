@@ -15,7 +15,7 @@ const newsData = [
     date: "20 Aug 2025",
     title:
       "Important information for Partner (subclasses 309 and 820) visa holders",
-    img: "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?q=80&w=2070",
+    img: "https://www.homeaffairs.gov.au//news-subsite/PublishingImages/partner-visa.png?RenditionID=7",
   },
 ];
 
