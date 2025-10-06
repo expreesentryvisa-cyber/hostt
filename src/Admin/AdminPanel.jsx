@@ -351,7 +351,7 @@ const AdminPanel = ({ onBackToSearch, initialData }) => {
 
   // Constants for dropdowns
   const countries = ['INDIA', 'Australia', 'United States', 'Canada', 'United Kingdom', 'Other'];
-  const statusOptions = ['In Effect', 'Expired', 'Cancelled', 'Pending'];
+  const statusOptions = ['In Effect', 'Expired', 'Cancelled', 'Pending','Finalised'];
   const entriesOptions = ['Multiple entries to and from Australia', 'Single entry only'];
   const workEntitlementsOptions = ['The Visa Holder does not have Work Entitlements', 'May work (full rights)', 'May work (limited hours)'];
 
@@ -690,13 +690,13 @@ const AdminPanel = ({ onBackToSearch, initialData }) => {
           
           {/* Row 9: Study Entitlements (Full Width) */}
           <div className="vevo-form-group vevo-full-width">
-            <label htmlFor="studyEntitlements">Study entitlements</label>
+            <label htmlFor="studyEntitlements">Work entitlements</label>
             <textarea
               id="studyEntitlements"
               className="vevo-input-field vevo-text-area-large"
               value={studyEntitlements}
               onChange={(e) => setStudyEntitlements(e.target.value)}
-              placeholder="Enter detailed study entitlements..."
+              placeholder="Enter detailed work entitlements..."
             />
           </div>
 
