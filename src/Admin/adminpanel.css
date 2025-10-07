@@ -142,3 +142,159 @@ label {
   color: #155724;
   border: 1px solid #c3e6cb;
 }
+
+/* --- Button Styles for Add / View / Show All --- */
+.vevo-btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* Add New Record */
+.vevo-btn-submit {
+  background: #0073e6;
+  color: #fff;
+}
+.vevo-btn-submit:hover {
+  background: #005bb5;
+  transform: translateY(-2px);
+}
+
+/* View Record */
+.vevo-btn-view {
+  background: #28a745;
+  color: #fff;
+}
+.vevo-btn-view:hover {
+  background: #1e7e34;
+  transform: translateY(-2px);
+}
+
+/* Show All Records */
+.vevo-btn-show {
+  background: #ff9800;
+  color: #fff;
+}
+.vevo-btn-show:hover {
+  background: #e68900;
+  transform: translateY(-2px);
+}
+
+/* Aligning the action buttons area */
+.vevo-form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+.vevo-btn-group-right {
+  display: flex;
+  gap: 10px;
+}
+
+/* Optional: for uniform loading text */
+.vevo-loading-text {
+  font-size: 13px;
+  color: #666;
+  margin-right: 10px;
+}
+/* Container for the table */
+.vevo-records-table-container {
+  overflow-x: auto;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Table styling */
+.vevo-records-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+.vevo-records-table th,
+.vevo-records-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+.vevo-records-table th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  color: #333;
+}
+
+.vevo-records-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* Status badges */
+.vevo-status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  display: inline-block;
+  text-align: center;
+}
+
+/* Status colors */
+.vevo-status-in-effect { background-color: #28a745; }
+.vevo-status-expired { background-color: #dc3545; }
+.vevo-status-cancelled { background-color: #6c757d; }
+.vevo-status-pending { background-color: #ffc107; }
+.vevo-status-finalised { background-color: #17a2b8; }
+
+/* Action buttons container */
+.vevo-action-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+/* Individual action buttons */
+.vevo-btn-action {
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vevo-btn-edit {
+  background-color: #0073e6;
+  color: #fff;
+}
+
+.vevo-btn-edit:hover {
+  background-color: #005bb5;
+}
+
+.vevo-btn-delete {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.vevo-btn-delete:hover {
+  background-color: #a71d2a;
+}
+
+/* Responsive: ensure table scrolls on small screens */
+@media (max-width: 900px) {
+  .vevo-records-table th,
+  .vevo-records-table td {
+    padding: 10px 8px;
+  }
+}

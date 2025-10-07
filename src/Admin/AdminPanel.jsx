@@ -325,7 +325,7 @@ const RecordSearch = ({ onSearchSuccess }) => {
 };
 
 // === 2. VEVO Record Entry Panel Component (AdminPanel) ===
-const AdminPanel = ({ onBackToSearch, initialData }) => {
+const AdminPanel = ({ onBackToSearch, initialData ,editRecord }) => {
   // State variables matching the VEVO record structure
   const [familyName, setFamilyName] = useState('SONIA RANI');
   const [documentNumber, setDocumentNumber] = useState('W5919826');
@@ -355,11 +355,36 @@ const AdminPanel = ({ onBackToSearch, initialData }) => {
   const entriesOptions = ['Multiple entries to and from Australia', 'Single entry only'];
   const workEntitlementsOptions = ['The Visa Holder does not have Work Entitlements', 'May work (full rights)', 'May work (limited hours)'];
 
+   useEffect(() => {
+    if (editRecord) {
+      setFamilyName(editRecord.familyName || '');
+      setDocumentNumber(editRecord.documentNumber || '');
+      setCountryOfPassport(editRecord.countryOfPassport || 'INDIA');
+      setVisaClassSubclass(editRecord.visaClassSubclass || '');
+      setVisaDescription(editRecord.visaDescription || '');
+      setVisaStream(editRecord.visaStream || '');
+      setVisaApplicant(editRecord.visaApplicant || '');
+      setVisaGrantDate(editRecord.visaGrantDate || new Date().toISOString().substring(0,10));
+      setVisaExpiryDate(editRecord.visaExpiryDate || new Date(Date.now() + 31536000000).toISOString().substring(0,10));
+      setLocation(editRecord.location || '');
+      setVisaStatus(editRecord.visaStatus || 'In Effect');
+      setVisaGrantNumber(editRecord.visaGrantNumber || '');
+      setEntriesAllowed(editRecord.entriesAllowed || 'Multiple entries to and from Australia');
+      setMustNotArriveAfter(editRecord.mustNotArriveAfter || new Date(Date.now() + 31536000000).toISOString().substring(0,10));
+      setPeriodOfStay(editRecord.periodOfStay || '');
+      setWorkEntitlements(editRecord.workEntitlements || 'The Visa Holder does not have Work Entitlements');
+      setStudyEntitlements(editRecord.studyEntitlements || '');
+      setVisaConditions(editRecord.visaConditions || '');
+    } else {
+      handleClear();
+    }
+  }, [editRecord]);
   // This function simulates the API call to save the record
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
+    
 
     const record = {
       // Include the search parameters from initialData
@@ -388,37 +413,23 @@ const AdminPanel = ({ onBackToSearch, initialData }) => {
       timestamp: new Date().toISOString(),
     };
 
-    try {
-        // --- Actual API Call Implementation ---
-        const response = await fetch(API_ENDPOINT, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                // Add Authorization header here if needed: 'Authorization': 'Bearer YOUR_TOKEN'
-            },
-            body: JSON.stringify(record),
-        });
+      try {
+      const method = editRecord ? 'PUT' : 'POST';
+      const url = editRecord ? `${API_ENDPOINT}/${editRecord._id}` : API_ENDPOINT;
 
-        if (response.ok) {
-            // Success response (Simulated 200 or 201)
-            // In a real app, you might parse: const result = await response.json();
-            
-            setMessage("VEVO Record successfully saved to MongoDB with search parameters included.");
-            console.log("Successfully sent data to API:", record);
+      const response = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(record),
+      });
 
-        } else {
-            // Error response (Simulated 4xx or 5xx)
-            // In a real app, you might read the error: const errorData = await response.json();
-            
-            // Simulating an error case for demonstration
-            throw new Error(`Server responded with status ${response.status}. Save operation failed.`);
-        }
+      if (!response.ok) throw new Error(`Server responded with status ${response.status}`);
+
+      setMessage(editRecord ? "VEVO Record successfully updated." : "VEVO Record successfully saved.");
     } catch (error) {
-        // Network errors or specific throw errors
-        console.error("API Submission Error:", error);
-        setMessage(`Error saving record: ${error.message}. Please check API endpoint in code.`);
+      setMessage(`Error saving record: ${error.message}`);
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
   };
 
@@ -748,29 +759,226 @@ const AdminPanel = ({ onBackToSearch, initialData }) => {
   );
 };
 
+const RecordsList = ({ onEdit, onBack }) => {
+  const [records, setRecords] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  const [deleteLoading, setDeleteLoading] = useState({});
+
+  useEffect(() => {
+    fetchRecords();
+  }, []);
+
+  const fetchRecords = async () => {
+    setLoading(true);
+    setMessage('');
+    try {
+      const response = await fetch(API_ENDPOINT);
+      if (response.ok) {
+        const data = await response.json();
+        // Handle different response formats
+        if (Array.isArray(data)) {
+          setRecords(data);
+        } else if (data.records && Array.isArray(data.records)) {
+          setRecords(data.records);
+        } else if (data.data && Array.isArray(data.data)) {
+          setRecords(data.data);
+        } else {
+          console.log('Unexpected data format:', data);
+          setRecords([]);
+        }
+      } else {
+        throw new Error('Failed to fetch records');
+      }
+    } catch (error) {
+      console.error('Fetch error:', error);
+      setMessage(`Error loading records: ${error.message}`);
+      setRecords([]); // Set empty array on error
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (recordId) => {
+    if (!window.confirm('Are you sure you want to delete this record?')) {
+      return;
+    }
+
+    setDeleteLoading({ ...deleteLoading, [recordId]: true });
+    try {
+      const response = await fetch(`${API_ENDPOINT}/${recordId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        setMessage('Record deleted successfully!');
+        fetchRecords(); // Refresh the list
+      } else {
+        throw new Error('Failed to delete record');
+      }
+    } catch (error) {
+      console.error('Delete error:', error);
+      setMessage(`Error deleting record: ${error.message}`);
+    } finally {
+      setDeleteLoading({ ...deleteLoading, [recordId]: false });
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="vevo-admin-card">
+        <h2>All VEVO Records</h2>
+        <div className="vevo-loading-text">Loading records...</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="vevo-admin-card">
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+        <h2>All VEVO Records ({records.length})</h2>
+        <button
+          type="button"
+          className="vevo-btn vevo-btn-back"
+          onClick={onBack}
+        >
+          &larr; Back to Search
+        </button>
+      </div>
+
+      {message && (
+        <div className={`vevo-message-box ${message.includes('success') ? 'vevo-message-success' : 'vevo-message-error'}`}>
+          {message}
+        </div>
+      )}
+
+      {records.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+          No records found. Add your first record using the search form.
+        </div>
+      ) : (
+        <div className="vevo-records-table-container">
+          <table className="vevo-records-table">
+            <thead>
+              <tr>
+                <th>Family Name</th>
+                <th>Document Number</th>
+                <th>Visa Class</th>
+                <th>Status</th>
+                <th>Grant Date</th>
+                <th>Expiry Date</th>
+                <th>Country</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.isArray(records) && records.map((record) => (
+                <tr key={record._id || record.id}>
+                  <td>{record.familyName || 'N/A'}</td>
+                  <td>{record.documentNumber || 'N/A'}</td>
+                  <td>{record.visaClassSubclass || 'N/A'}</td>
+                  <td>
+                    <span className={`vevo-status-badge vevo-status-${(record.visaStatus || 'pending').toLowerCase().replace(' ', '-')}`}>
+                      {record.visaStatus || 'Pending'}
+                    </span>
+                  </td>
+                  <td>{record.visaGrantDate || 'N/A'}</td>
+                  <td>{record.visaExpiryDate || 'N/A'}</td>
+                  <td>{record.countryOfPassport || 'N/A'}</td>
+                  <td>
+                    <div className="vevo-action-buttons">
+                      <button
+                        className="vevo-btn-action vevo-btn-edit"
+                        onClick={() => onEdit(record)}
+                        title="Edit Record"
+                      >
+                        ✏️ Edit
+                      </button>
+                      <button
+                        className="vevo-btn-action vevo-btn-delete"
+                        onClick={() => handleDelete(record._id || record.id)}
+                        disabled={deleteLoading[record._id || record.id]}
+                        title="Delete Record"
+                      >
+                        {deleteLoading[record._id || record.id] ? '...' : '🗑️ Delete'}
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+};
+
 // === 3. Main Application Root (VEVOApp) ===
 const VEVOApp = () => {
-  const [currentView, setCurrentView] = useState('search'); // State can be 'search' or 'admin'
+  const [currentView, setCurrentView] = useState('search'); // State can be 'search', 'admin', or 'list'
   const [searchContext, setSearchContext] = useState(null); // Stores data from the search form
+  const [editRecord, setEditRecord] = useState(null); // Stores record being edited
 
   const handleSearchSuccess = (searchParams) => {
     setSearchContext(searchParams);
+    setEditRecord(null);
     setCurrentView('admin');
   };
 
   const handleBackToSearch = () => {
     setCurrentView('search');
     setSearchContext(null);
+    setEditRecord(null);
   };
+
+  const handleViewRecords = () => {
+    setCurrentView('list');
+  };
+
+  const handleEditRecord = (record) => {
+    setEditRecord(record);
+    setSearchContext({
+      documentType: record.documentType,
+      referenceType: record.referenceType,
+      referenceValue: record.referenceValue,
+      dateOfBirth: record.dateOfBirth || ''
+    });
+    setCurrentView('admin');
+  };
+
   return (
     <>
       <div className="vevo-app-container">
+        {/* Navigation Bar */}
+        <div className="vevo-nav-bar">
+          <button
+            className={`vevo-btn vevo-btn-submit ${currentView === 'search' ? 'active' : ''}`}
+            onClick={handleBackToSearch}
+          >
+            🔍 Add New Record
+          </button>
+          <button
+            className={`vevo-btn vevo-btn-view ${currentView === 'list' ? 'active' : ''}`}
+            onClick={handleViewRecords}
+          >
+            📋 View All Records
+          </button>
+        </div>
+
+        {/* Main Content */}
         {currentView === 'search' ? (
           <RecordSearch onSearchSuccess={handleSearchSuccess} />
+        ) : currentView === 'list' ? (
+          <RecordsList 
+            onEdit={handleEditRecord}
+            onBack={handleBackToSearch}
+          />
         ) : (
           <AdminPanel 
             onBackToSearch={handleBackToSearch} 
             initialData={searchContext}
+            editRecord={editRecord}
           />
         )}
       </div>
